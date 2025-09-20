@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Professional Legal AI Platform Design System */
+    --background: 0 0% 99%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Professional blue primary palette */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-muted: 217 91% 95%;
+    --primary-hover: 217 91% 55%;
+
+    /* Subtle gray secondary */
+    --secondary: 215 15% 96%;
+    --secondary-foreground: 215 25% 25%;
+    --secondary-hover: 215 15% 92%;
+
+    /* Soft muted tones */
+    --muted: 215 15% 97%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Green accent for trust/success */
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+    --accent-muted: 142 76% 96%;
+    --accent-hover: 142 76% 32%;
+
+    /* Refined borders and inputs */
+    --border: 215 15% 90%;
+    --input: 215 15% 94%;
+    --ring: 217 91% 60%;
+
+    /* Destructive states */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Premium gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(217 91% 70%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(215 15% 98%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(215 15% 99%) 100%);
+
+    /* Premium shadows */
+    --shadow-card: 0 1px 3px 0 hsl(215 25% 15% / 0.1), 0 1px 2px 0 hsl(215 25% 15% / 0.06);
+    --shadow-elevated: 0 10px 15px -3px hsl(215 25% 15% / 0.1), 0 4px 6px -2px hsl(215 25% 15% / 0.05);
+    --shadow-hero: 0 20px 25px -5px hsl(217 91% 60% / 0.1), 0 10px 10px -5px hsl(217 91% 60% / 0.04);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bouncy: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Cool modern dark theme - deep blue-black background */
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Bright electric blue primary */
+    --primary: 217 91% 65%;
+    --primary-foreground: 222 47% 6%;
+    --primary-muted: 217 91% 8%;
+    --primary-hover: 217 91% 70%;
+
+    /* Cool gray secondary */
+    --secondary: 217 20% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --secondary-hover: 217 20% 16%;
+
+    /* Subtle muted tones */
+    --muted: 217 20% 10%;
+    --muted-foreground: 215 20% 70%;
+
+    /* Vibrant cyan accent */
+    --accent: 189 94% 55%;
+    --accent-foreground: 222 47% 6%;
+    --accent-muted: 189 94% 8%;
+    --accent-hover: 189 94% 60%;
+
+    --destructive: 0 62.8% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 20% 16%;
+    --input: 217 20% 14%;
+    --ring: 217 91% 65%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Premium button variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-primary-hover text-primary-foreground;
+    @apply px-8 py-4 rounded-xl font-semibold text-lg;
+    @apply shadow-lg hover:shadow-hero transition-all duration-300;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary-outline {
+    @apply border-2 border-border bg-background/80 backdrop-blur-sm;
+    @apply hover:bg-secondary hover:border-secondary-hover;
+    @apply transition-colors duration-200;
+  }
+
+  /* Card variants */
+  .card-elevated {
+    @apply bg-gradient-to-b from-card to-secondary/20;
+    @apply border border-border/50 rounded-2xl;
+    @apply shadow-elevated backdrop-blur-sm;
+  }
+
+  .card-hero {
+    @apply bg-gradient-to-br from-card via-primary-muted/30 to-accent-muted/20;
+    @apply border border-border/30 rounded-3xl p-8;
+    @apply shadow-hero backdrop-blur-lg;
+  }
+
+  /* Interactive elements */
+  .interactive-scale {
+    @apply transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .interactive-lift {
+    @apply transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+  }
+
+  /* Upload zone styling */
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-2xl;
+    @apply bg-gradient-to-b from-secondary/20 to-secondary/5;
+    @apply hover:border-primary/50 hover:bg-primary-muted/10;
+    @apply transition-all duration-300;
+    @apply hover:scale-[1.01] active:scale-[0.99];
+  }
+
+  .upload-zone.drag-over {
+    @apply border-primary bg-primary-muted/20 scale-[1.02];
+    @apply shadow-lg;
+  }
+
+  /* Enhanced button animations */
+  .btn-animated {
+    @apply transition-all duration-200;
+    @apply hover:scale-105 active:scale-95;
+    @apply hover:shadow-lg active:shadow-sm;
+  }
+
+  .btn-pulse {
+    @apply animate-pulse;
+  }
+
+  /* Page transition animations */
+  .page-enter {
+    @apply animate-fade-in;
+  }
+
+  .page-exit {
+    @apply animate-slide-up;
+  }
+
+  /* Navbar transition animations */
+  .navbar-mobile {
+    @apply transform transition-all duration-500 ease-in-out;
+  }
+
+  .sidebar-desktop {
+    @apply transform transition-all duration-500 ease-in-out;
+  }
+
+  /* Document card animations */
+  .document-card {
+    @apply transition-all duration-300;
+    @apply hover:shadow-lg hover:-translate-y-1;
+    @apply hover:border-primary/20;
+  }
+
+  /* Stats card animations */
+  .stats-card {
+    @apply transition-all duration-300;
+    @apply hover:scale-[1.02] hover:shadow-lg;
+  }
+
+  /* Icon bounce animation */
+  .icon-bounce {
+    @apply transition-transform duration-200;
+    @apply hover:scale-110 active:scale-90;
+  }
+
+  /* Smooth fade transitions */
+  .fade-transition {
+    @apply transition-opacity duration-300 ease-in-out;
+  }
+
+  /* Upload button special animation */
+  .upload-btn-animated {
+    @apply relative overflow-hidden;
+    @apply before:absolute before:inset-0;
+    @apply before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
+    @apply before:translate-x-[-100%] before:transition-transform before:duration-700;
+    @apply hover:before:translate-x-[100%];
+  }
+}
