@@ -18,12 +18,14 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
+import { fetchUserSummaries } from "@/services/firebaseFetchSummaries";
 
 const Profile = () => {
   const { user } = useAuth();
   const { logout } = useFirebaseAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [docCount, setDocCount] = useState<number>(0);
 
   const handleLogout = async () => {
     try {
@@ -84,6 +86,16 @@ const Profile = () => {
 
   const providerInfo = getProviderInfo();
 
+  useEffect(() => {
+    async function loadDocCount() {
+      if (user?.uid) {
+        const summaries = await fetchUserSummaries(user.uid);
+        setDocCount(summaries.length);
+      }
+    }
+    loadDocCount();
+  }, [user]);
+
   if (!user) {
     navigate("/auth");
     return null;
@@ -107,15 +119,7 @@ const Profile = () => {
               </Button>
             </div>
             <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/settings")}
-                className="flex items-center space-x-2"
-              >
-                <Settings className="w-4 h-4" />
-                <span>Settings</span>
-              </Button>
+          
               <Button
                 variant="outline"
                 size="sm"
@@ -257,16 +261,12 @@ const Profile = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-primary">1</p>
+                  <p className="text-2xl font-bold text-primary">{docCount}</p>
                   <p className="text-sm text-muted-foreground">Documents Analyzed</p>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-bold text-accent">0</p>
                   <p className="text-sm text-muted-foreground">AI Chats</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-green-600">30</p>
-                  <p className="text-sm text-muted-foreground">Days Active</p>
                 </div>
               </div>
             </CardContent>

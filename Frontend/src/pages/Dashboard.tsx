@@ -42,6 +42,8 @@ const Dashboard = () => {
   const [aiSummary, setAiSummary] = useState<null | { summary: string; highlightedClauses: { clause: string; explanation: string }[] }>(null);
   const [summarizing, setSummarizing] = useState(false);
   const [userSummaries, setUserSummaries] = useState<any[]>([]);
+  const [selectedSummary, setSelectedSummary] = useState<null | { fileName: string; summary: string; riskTag: string; createdAt?: string }>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     async function loadSummaries() {
@@ -130,10 +132,9 @@ const Dashboard = () => {
   }
 
   const sidebarItems = [
-  { id: "home", label: "Home", icon: Home },
-  { id: "documents", label: "My Documents", icon: FolderOpen },
-  { id: "results", label: "Processing Results", icon: BookOpen },
-  { id: "settings", label: "Settings", icon: Settings },
+    { id: "home", label: "Home", icon: Home },
+    { id: "documents", label: "My Documents", icon: FolderOpen },
+    { id: "settings", label: "Settings", icon: Settings },
   ];
 
   const recentDocuments = [
@@ -255,9 +256,18 @@ const Dashboard = () => {
                 <input
                   placeholder="Search documents..."
                   className="pl-10 pr-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary w-48 lg:w-64"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button className="btn-hero text-sm lg:text-base px-3 lg:px-6 btn-animated">
+              <Button className="btn-hero text-sm lg:text-base px-3 lg:px-6 btn-animated"
+                onClick={() => {
+                  setActiveTab("home");
+                  setTimeout(() => {
+                    document.getElementById('file-upload')?.click();
+                  }, 200);
+                }}
+              >
                 <Plus className="mr-1 lg:mr-2 w-4 h-4 icon-bounce" />
                 <span className="hidden sm:inline">New Analysis</span>
                 <span className="sm:hidden">New</span>
@@ -330,11 +340,14 @@ const Dashboard = () => {
                   <h3 className="text-base lg:text-lg font-semibold text-foreground">Recent Documents</h3>
                 </div>
                 <div className="p-4 lg:p-6 space-y-4">
-                  {userSummaries.slice(-3).reverse().map((doc, index) => (
+                  {userSummaries.filter(doc =>
+                    doc.fileName.toLowerCase().includes(searchQuery.toLowerCase())
+                  ).slice(-3).reverse().map((doc, index) => (
                     <div
                       key={doc.id}
                       className="document-card flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-all duration-300 cursor-pointer space-y-3 sm:space-y-0"
                       style={{ animationDelay: `${index * 100}ms` }}
+                      onClick={() => setSelectedSummary(doc)}
                     >
                       <div className="flex items-center space-x-4">
                         <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 icon-bounce">
@@ -358,6 +371,61 @@ const Dashboard = () => {
                       </div>
                     </div>
                   ))}
+          {selectedSummary && (
+            <Card className="card-elevated mt-6">
+              <div className="p-4 lg:p-6 border-b border-border">
+                <h3 className="text-base lg:text-lg font-semibold text-foreground">AI Summary for {selectedSummary.fileName}</h3>
+                <p className="text-xs lg:text-sm text-muted-foreground">{selectedSummary.createdAt ? new Date(selectedSummary.createdAt).toLocaleString() : ""}</p>
+              </div>
+              <div className="p-4 lg:p-6">
+                <p className="text-base whitespace-pre-wrap mb-4">{selectedSummary.summary}</p>
+                <Badge variant={selectedSummary.riskTag === "low risk" ? "secondary" : "destructive"} className="capitalize text-xs">
+                  {selectedSummary.riskTag}
+                </Badge>
+                <Button className="ml-4" onClick={() => setSelectedSummary(null)}>
+                  Close
+                </Button>
+                <Button className="ml-4" onClick={() => {
+                  // Download summary as PDF
+                  import('jspdf').then(({ default: jsPDF }) => {
+                    const doc = new jsPDF();
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    const margin = 15;
+                    const lineHeight = 10;
+                    let y = margin;
+
+                    doc.setFontSize(16);
+                    doc.text(`AI Summary for ${selectedSummary.fileName}` || 'AI Summary', margin, y);
+                    y += lineHeight * 2;
+
+                    doc.setFontSize(12);
+                    const summaryLines = doc.splitTextToSize(selectedSummary.summary, pageWidth - margin * 2);
+                    summaryLines.forEach(line => {
+                      if (y + lineHeight > pageHeight - margin) {
+                        doc.addPage();
+                        y = margin;
+                      }
+                      doc.text(line, margin, y);
+                      y += lineHeight;
+                    });
+
+                    y += lineHeight;
+                    doc.setFontSize(14);
+                    doc.text('Risk Tag', margin, y);
+                    y += lineHeight * 1.5;
+                    doc.setFontSize(12);
+                    doc.text(selectedSummary.riskTag, margin, y);
+                    y += lineHeight * 2;
+
+                    doc.save(`${selectedSummary.fileName || 'summary'}.pdf`);
+                  });
+                }}>
+                  Download PDF
+                </Button>
+              </div>
+            </Card>
+          )}
                 </div>
               </Card>
 
@@ -458,7 +526,9 @@ const Dashboard = () => {
                 </div>
                 <div className="p-4 lg:p-6">
                   <div className="grid gap-3 lg:gap-4">
-                    {userSummaries.slice().reverse().map((doc, index) => (
+                    {userSummaries.filter(doc =>
+                      doc.fileName.toLowerCase().includes(searchQuery.toLowerCase())
+                    ).slice().reverse().map((doc, index) => (
                       <div
                         key={doc.id}
                         className="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 rounded-xl bg-secondary/20 hover:bg-secondary/40 transition-colors interactive-scale cursor-pointer group space-y-3 lg:space-y-0"
@@ -486,9 +556,45 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="flex items-center space-x-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                          <Button variant="ghost" size="sm" className="text-xs lg:text-sm">View</Button>
-                          <Button variant="ghost" size="sm" className="text-xs lg:text-sm hidden sm:inline-flex">Download</Button>
-                          <Button variant="ghost" size="sm" className="text-xs lg:text-sm hidden sm:inline-flex">Delete</Button>
+                          <Button variant="ghost" size="sm" className="text-xs lg:text-sm" onClick={() => {
+                            setActiveTab('home');
+                            setSelectedSummary(doc);
+                          }}>View</Button>
+                          <Button variant="ghost" size="sm" className="text-xs lg:text-sm hidden sm:inline-flex" onClick={() => {
+                            import('jspdf').then(({ default: jsPDF }) => {
+                              const pdf = new jsPDF();
+                              const pageWidth = pdf.internal.pageSize.getWidth();
+                              const pageHeight = pdf.internal.pageSize.getHeight();
+                              const margin = 15;
+                              const lineHeight = 10;
+                              let y = margin;
+
+                              pdf.setFontSize(16);
+                              pdf.text(`AI Summary for ${doc.fileName}`, margin, y);
+                              y += lineHeight * 2;
+
+                              pdf.setFontSize(12);
+                              const summaryLines = pdf.splitTextToSize(doc.summary, pageWidth - margin * 2);
+                              summaryLines.forEach(line => {
+                                if (y + lineHeight > pageHeight - margin) {
+                                  pdf.addPage();
+                                  y = margin;
+                                }
+                                pdf.text(line, margin, y);
+                                y += lineHeight;
+                              });
+
+                              y += lineHeight;
+                              pdf.setFontSize(14);
+                              pdf.text('Risk Tag', margin, y);
+                              y += lineHeight * 1.5;
+                              pdf.setFontSize(12);
+                              pdf.text(doc.riskTag, margin, y);
+                              y += lineHeight * 2;
+
+                              pdf.save(`${doc.fileName || 'summary'}.pdf`);
+                            });
+                          }}>Download</Button>
                         </div>
                       </div>
                     ))}
