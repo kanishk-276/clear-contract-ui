@@ -43,7 +43,7 @@ const Auth = () => {
         const isNewUser = result.metadata.creationTime === result.metadata.lastSignInTime;
         
         if (isNewUser) {
-          toast.success(`Welcome to LegalAI, ${result.displayName || result.email}! Account created successfully.`);
+          toast.success(`Welcome to ClariLegal AI, ${result.displayName || result.email}! Account created successfully.`);
         } else {
           toast.success(`Welcome back, ${result.displayName || result.email}!`);
         }
@@ -78,7 +78,7 @@ const Auth = () => {
         const isNewUser = result.metadata.creationTime === result.metadata.lastSignInTime;
         
         if (isNewUser) {
-          toast.success(`Welcome to LegalAI, ${result.displayName || result.email || 'Developer'}! Account created successfully.`);
+          toast.success(`Welcome to ClariLegal AI, ${result.displayName || result.email || 'Developer'}! Account created successfully.`);
         } else {
           toast.success(`Welcome back, ${result.displayName || result.email || 'Developer'}!`);
         }
@@ -119,12 +119,12 @@ const Auth = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-xl flex items-center justify-center">
               <FileText className="w-6 h-6 text-primary-foreground" />
             </div>
-            <span className="text-2xl font-bold text-foreground">LegalAI</span>
+            <span className="text-2xl font-bold text-foreground">ClariLegal AI</span>
           </div>
           
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-foreground">
-              Welcome to LegalAI
+              Welcome to ClariLegal AI
             </h1>
             <p className="text-muted-foreground">
               Sign in to start analyzing legal documents with AI

@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 import jsPDF from 'jspdf';
-
-
-
 import { 
   Upload, 
   FileText, 
@@ -178,15 +174,13 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-64 lg:bg-card lg:border-r lg:border-border sidebar-desktop">
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-hover rounded-lg flex items-center justify-center icon-bounce">
-              <FileText className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold text-foreground">LegalAI</span>
+        <aside className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-64 lg:bg-card lg:border-r lg:border-border sidebar-desktop">
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <div className="flex items-center space-x-2">
+              <img src="./public/Logo_notext.png" alt="Logo" className="w-15 h-14" />
+            <span className="text-xl font-bold text-foreground">ClariLegal AI</span>
           </div>
-        </div>
+      </div>
 
         <nav className="p-4 space-y-2">
           {sidebarItems.map((item) => (
@@ -210,9 +204,9 @@ const Dashboard = () => {
             variant="ghost" 
             className="w-full justify-start text-muted-foreground btn-animated"
             onClick={() => navigate("/")}
-          >
-            <LogOut className="mr-3 w-5 h-5 icon-bounce" />
-            Back to Home
+        >
+          <LogOut className="mr-3 w-5 h-5 icon-bounce" />
+          Back to Home
           </Button>
         </div>
       </aside>
@@ -478,11 +472,7 @@ const Dashboard = () => {
                   <h2 className="text-xl lg:text-2xl font-bold text-foreground">My Documents</h2>
                   <p className="text-sm lg:text-base text-muted-foreground">Manage and analyze your legal documents</p>
                 </div>
-                <Button className="btn-hero w-full sm:w-auto text-sm lg:text-base px-4 lg:px-6 btn-animated">
-                  <Plus className="mr-2 w-4 h-4 icon-bounce" />
-                  <span className="hidden sm:inline">Upload New Document</span>
-                  <span className="sm:hidden">Upload Document</span>
-                </Button>
+                {/* Upload New Document button removed as requested */}
               </div>
 
               {/* Document Stats */}

@@ -29,7 +29,7 @@ const Landing = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-hover rounded-lg flex items-center justify-center">
               <FileText className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">LegalAI</span>
+            <span className="text-xl font-bold text-foreground">ClariLegal AI</span>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4 mt-2 sm:mt-0">
             <ThemeToggle />
@@ -171,7 +171,7 @@ const Landing = () => {
                 Ready to Simplify Legal Documents?
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground">
-                Join thousands of professionals who trust LegalAI for clear, 
+                Join thousands of professionals who trust ClariLegal AI for clear, 
                 reliable legal document analysis.
               </p>
               <Button 
@@ -196,10 +196,10 @@ const Landing = () => {
               <div className="w-6 h-6 bg-gradient-to-br from-primary to-primary-hover rounded-md flex items-center justify-center">
                 <FileText className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold text-foreground">LegalAI</span>
+              <span className="font-semibold text-foreground">ClariLegal AI</span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
-              © 2024 LegalAI. Transforming legal documents with AI.
+              © 2024 ClariLegal AI. Transforming legal documents with AI.
             </p>
           </div>
         </div>
