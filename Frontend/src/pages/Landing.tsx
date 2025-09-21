@@ -26,7 +26,7 @@ const Landing = () => {
       <nav className="border-b border-border/20 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between">
           <div className="flex items-center space-x-2">
-              <img src="/public/Logo_notext.png" alt="Logo" className="w-15 h-14" />
+              <img src="/Logo_notext.png" alt="Logo" className="w-15 h-14" />
             <span className="text-xl font-bold text-foreground">ClariLegal AI</span>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4 mt-2 sm:mt-0">
@@ -80,6 +80,7 @@ const Landing = () => {
                   variant="outline" 
                   size="lg" 
                   className="btn-secondary-outline w-full sm:w-auto"
+                  onClick={() => window.open("https://drive.google.com/file/d/1JP2Im4rZTrfx6eCDt0BpWQ-a7RxegIlq/view?usp=sharing", "_blank")}
                 >
                   Watch Demo
                 </Button>
