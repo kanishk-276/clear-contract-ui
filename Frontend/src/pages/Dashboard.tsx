@@ -177,7 +177,7 @@ const Dashboard = () => {
         <aside className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-64 lg:bg-card lg:border-r lg:border-border sidebar-desktop">
           <div className="flex items-center justify-between p-6 border-b border-border">
             <div className="flex items-center space-x-2">
-              <img src="./public/Logo_notext.png" alt="Logo" className="w-15 h-14" />
+              <img src="/public/Logo_notext.png" alt="Logo" className="w-15 h-14" />
             <span className="text-xl font-bold text-foreground">ClariLegal AI</span>
           </div>
       </div>

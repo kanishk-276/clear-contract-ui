@@ -26,9 +26,7 @@ const Landing = () => {
       <nav className="border-b border-border/20 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-hover rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-primary-foreground" />
-            </div>
+              <img src="/public/Logo_notext.png" alt="Logo" className="w-15 h-14" />
             <span className="text-xl font-bold text-foreground">ClariLegal AI</span>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4 mt-2 sm:mt-0">
